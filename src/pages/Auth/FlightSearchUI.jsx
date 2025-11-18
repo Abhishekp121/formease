@@ -5,7 +5,7 @@ export default function FlightSearchUI() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
-  const [selectedPriceRange, setSelectedPriceRange] = useState(null);
+ 
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -21,12 +21,7 @@ export default function FlightSearchUI() {
     alert(`Slot booked for ${selectedSlot}`);
   };
 
-  const priceRanges = [
-    { range: "Under $50", count: 234, color: "from-green-400 to-green-600", icon: DollarSign },
-    { range: "$50 - $100", count: 456, color: "from-blue-400 to-blue-600", icon: DollarSign },
-    { range: "$100 - $200", count: 123, color: "from-orange-400 to-orange-600", icon: DollarSign },
-    { range: "Over $200", count: 89, color: "from-red-400 to-red-600", icon: DollarSign },
-  ];
+  
 
   return (
     <div className="min-h-screen bg-[#a69ec0] flex justify-center p-4">
@@ -173,91 +168,7 @@ export default function FlightSearchUI() {
             </div>
 
             <div className="bg-white p-4 rounded-2xl shadow text-sm space-y-4 md:space-y-6">
-              {/* Stops */}
-              {/* <div>
-                <h3 className="font-semibold mb-2">Stops</h3>
-                <div className="space-y-2">
-                  <label className="flex justify-between text-xs md:text-sm">
-                    <span>
-                      <input type="checkbox" className="mr-2" /> Non-stop
-                    </span>
-                    <span>$34</span>
-                  </label>
-
-                  <label className="flex justify-between text-xs md:text-sm">
-                    <span>
-                      <input type="checkbox" className="mr-2" /> 1 stop
-                    </span>
-                    <span>$70</span>
-                  </label>
-
-                  <label className="flex justify-between text-xs md:text-sm">
-                    <span>
-                      <input type="checkbox" className="mr-2" /> 2+ stops
-                    </span>
-                    <span>$98</span>
-                  </label>
-                </div>
-              </div> */}
-
-              {/* Departure */}
-              {/* <div>
-                <h3 className="font-semibold mb-2">Departure times</h3>
-                <input type="range" className="w-full" />
-                <p className="text-xs text-gray-400 mt-1">11:00 AM – 11:00 PM</p>
-              </div> */}
-
-              {/* Duration */}
-              {/* <div>
-                <h3 className="font-semibold mb-2">Trip duration</h3>
-                <input type="range" className="w-full" />
-                <p className="text-xs text-gray-400 mt-1">2 hours – 12 hours</p>
-              </div> */}
-
-              {/* Baggage */}
-              {/* <div>
-                <h3 className="font-semibold mb-2">Baggage</h3>
-                <div className="space-y-2">
-                  <label className="flex justify-between text-xs md:text-sm">
-                    <span>
-                      <input type="radio" name="bag" className="mr-2" /> 1 small bag
-                    </span>
-                    <span>$34</span>
-                  </label>
-
-                  <label className="flex justify-between text-xs md:text-sm">
-                    <span>
-                      <input type="radio" name="bag" className="mr-2" /> 2 cabin bags
-                    </span>
-                    <span>$58</span>
-                  </label>
-
-                  <label className="flex justify-between text-xs md:text-sm">
-                    <span>
-                      <input type="radio" name="bag" className="mr-2" /> Checked-in
-                    </span>
-                    <span>$112</span>
-                  </label>
-                </div>
-              </div> */}
-
-              {/* Airports */}
-              {/* <div>
-                <h3 className="font-semibold mb-2">Airports</h3>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-xs md:text-sm">
-                    <input type="checkbox" /> CIA - Rome Ciampino
-                  </label>
-
-                  <label className="flex items-center gap-2 text-xs md:text-sm">
-                    <input type="checkbox" /> FCO - Rome Fiumicino
-                  </label>
-                </div>
-              </div>
-
-            </div> */}
-
-
+            
             {/* BOOK A SLOT SECTION */}
             <div className="bg-white p-4 md:p-6 rounded-2xl shadow-lg">
               <div className="flex items-center gap-2 mb-4">
