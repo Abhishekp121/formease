@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Bell, MoreVertical, User } from "lucide-react";
 
-export default function Header({ name = "Abhishek Gurjar" }) {
+export default function Header({ name = "Abhishek Patidar" }) {
   const [dateTime, setDateTime] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const menuRef = useRef(null);

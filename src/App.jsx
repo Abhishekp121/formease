@@ -13,10 +13,17 @@ import BookingForm from './pages/Booking/BookingForm';
 import Payment from './pages/Booking/Payment';
 import Footer from './components/Footer';
 import FlightSearchUI from './pages/Auth/FlightSearchUI';
-import AdminDashboard from './pages/adminDashbord/AdminDashboard';
+import TotalRequestsCard from './pages/adminDashbord/TotalRequestsCard';
 import AllUsers from './pages/adminDashbord/AllUsers';
 import AdminHome from './pages/adminDashbord/AdminHome';
-
+import AdminDashboard from './pages/AdminDashbord/AdminDashboard';
+import SubAdminPage from './pages/adminDashbord/SubAdminPage';
+import Employees from './pages/adminDashbord/Employees';
+import BillingPage from './pages/adminDashbord/BillingPage';
+import TeamPerformance from './pages/adminDashbord/TeamPerformance';
+import Revenue from './pages/adminDashbord/Revenue';
+import FormCategories from './pages/adminDashbord/FormCategories';
+import FormMaster from './pages/adminDashbord/FormMaster';
 export default function App() {
 
 
@@ -38,7 +45,9 @@ export default function App() {
           <Route path="/form/:id" element={<FormDetails />} />
           <Route path="/booking/:id" element={<BookingForm />} />
           <Route path="/payment" element={<Payment />} />
-           <Route path="/flights" element={<FlightSearchUI />} />
+          <Route path="/flights" element={<FlightSearchUI />} />
+           
+           
         </Route>
 
 
@@ -47,11 +56,18 @@ export default function App() {
         <Route path="/adminDashboard" element={<AdminDashboard />}>
           <Route index element={<AdminHome />} />
           <Route path="users" element={<AllUsers />} />
+           <Route path="Form-Request" element={<TotalRequestsCard/>} />
+            <Route path="Sub-admin" element={<SubAdminPage/>} />
+            <Route path="Employee" element={<Employees/>} />
+            <Route path="Billing" element={<BillingPage/>} />
+            <Route path="TeamPerformance" element={<TeamPerformance/>} />
+            <Route path="Revenue" element={<Revenue/>} />
+            <Route path="FormCategories" element={<FormCategories/>} />
+             <Route path="FormMaster" element={<FormMaster/>} />
         </Route>
 
       </Routes>
-{/* 
-</BrowserRouter> */}
+{/* /BrowserRouter> */}
       
 
       {/* <Footer /> */}
