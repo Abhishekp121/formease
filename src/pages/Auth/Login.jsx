@@ -7,14 +7,50 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    // TODO: API call or validation
-    console.log("Email:", email, "Password:", password);
+  //   // TODO: API call or validation
+  //   console.log("Email:", email, "Password:", password);
 
-    navigate("/flights"); // login success
-  };
+  //   navigate("/flights"); // login success
+  // };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { 
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Login Successful!");
+
+      // JWT token save karna ho to
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
+      navigate("/flights");
+    } else {
+      alert(data.message || "Invalid credentials");
+    }
+
+  } catch (error) {
+    console.log(error);
+    alert("Server error");
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">

@@ -24,6 +24,9 @@ import TeamPerformance from './pages/adminDashbord/TeamPerformance';
 import Revenue from './pages/adminDashbord/Revenue';
 import FormCategories from './pages/adminDashbord/FormCategories';
 import FormMaster from './pages/adminDashbord/FormMaster';
+import SubadminDashboard from './pages/subadmnDashbord/subadminDashbord';
+import SubAdminHome from './pages/subadmnDashbord/SubAdminHome';
+import CreateTeam from './pages/subadmnDashbord/CreateTeam';
 export default function App() {
 
 
@@ -51,8 +54,6 @@ export default function App() {
         </Route>
 
 
-
-
         <Route path="/adminDashboard" element={<AdminDashboard />}>
           <Route index element={<AdminHome />} />
           <Route path="users" element={<AllUsers />} />
@@ -65,6 +66,16 @@ export default function App() {
             <Route path="FormCategories" element={<FormCategories/>} />
              <Route path="FormMaster" element={<FormMaster/>} />
         </Route>
+
+
+
+
+        <Route path="/subadminDashbord" element={<SubadminDashboard/>}>
+          <Route index element={<SubAdminHome />} />
+           <Route path="CreateTeam" element={<CreateTeam/>} />
+         
+        </Route>
+   
 
       </Routes>
 {/* /BrowserRouter> */}
