@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CheckCircle, Clock, CreditCard, ClipboardList, Calendar, DollarSign } from "lucide-react";
+import VerifyEmailOtp from "./VerifyEmailOtp";
 
 export default function FlightSearchUI() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function FlightSearchUI() {
   
 
   return (
+    <>   
     <div className="min-h-screen bg-[#a69ec0] flex justify-center p-4">
       <div className="w-full max-w-7xl bg-white rounded-3xl shadow-2xl p-4 md:p-6 lg:p-8 space-y-6">
 
@@ -214,5 +216,7 @@ export default function FlightSearchUI() {
 
 
     </div>
+
+    </>
   );
 }

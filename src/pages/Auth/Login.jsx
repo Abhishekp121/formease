@@ -1,138 +1,137 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
+import axios from "axios";
+import VerifyEmailOtp from "./VerifyEmailOtp";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
 
-  //   // TODO: API call or validation
-  //   console.log("Email:", email, "Password:", password);
+  const [emailVerified, setEmailVerified] = useState(true);
+  const [userEmail, setUserEmail] = useState("");
 
-  //   navigate("/flights"); // login success
-  // };
+  // ---------------- VALIDATION ----------------
+  const validate = () => {
+    const e = {};
+
+    if (!email.trim()) {
+      e.email = "Email is required";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) e.email = "Invalid email format";
+    }
+
+    if (!password) {
+      e.password = "Password is required";
+    }
+
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  // ---------------- LOGIN ----------------
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    if (!validate()) return;
 
-  try {
-    const response = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/user/login",
+        { email, password }
+      );
 
-    const data = await response.json();
+      const { message, user } = response.data;
+      alert(message);
 
-    if (response.ok) {
-      alert("Login Successful!");
-
-      // JWT token save karna ho to
-      if (data.token) {
-        localStorage.setItem("token", data.token);
+      if (!user.isEmailVerified) {
+        setUserEmail(user.email);
+        setEmailVerified(false);
+        return;
       }
 
       navigate("/flights");
-    } else {
-      alert(data.message || "Invalid credentials");
+    } catch (error) {
+      alert(error.response?.data?.message || "Invalid credentials");
     }
+  };
 
-  } catch (error) {
-    console.log(error);
-    alert("Server error");
+  // ---------------- OTP SCREEN ----------------
+  if (!emailVerified) {
+    return <VerifyEmailOtp user={userEmail} />;
   }
-};
 
-
+  // ---------------- UI ----------------
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-10 w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border">
 
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-2">
+        <h2 className="text-3xl font-bold text-center text-gray-800">
           Welcome Back 👋
         </h2>
-        <p className="text-center text-gray-500 mb-8">
-          Login to continue your journey
+        <p className="text-center text-gray-500 mt-2 mb-8">
+          Login to your account
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
 
           {/* EMAIL */}
-          <div className="space-y-1">
-            <label className="block text-gray-700 font-medium">Email</label>
-            <div className="flex items-center gap-2 px-4 py-3 border rounded-xl bg-gray-50 focus-within:ring-2 focus-within:ring-indigo-400">
-              <Mail className="w-5 h-5 text-gray-500" />
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              Email Address
+            </label>
+            <div className="mt-1 flex items-center gap-2 px-4 py-3 border rounded-xl bg-gray-50 focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+              <Mail className="w-5 h-5 text-gray-400" />
               <input
                 type="email"
+                placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full bg-transparent outline-none"
-                required
+                className="w-full bg-transparent outline-none text-sm"
               />
             </div>
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
 
           {/* PASSWORD */}
-          <div className="space-y-1">
-            <label className="block text-gray-700 font-medium">Password</label>
-            <div className="flex items-center gap-2 px-4 py-3 border rounded-xl bg-gray-50 focus-within:ring-2 focus-within:ring-indigo-400">
-              <Lock className="w-5 h-5 text-gray-500" />
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <div className="mt-1 flex items-center gap-2 px-4 py-3 border rounded-xl bg-gray-50 focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+              <Lock className="w-5 h-5 text-gray-400" />
               <input
                 type="password"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                className="w-full bg-transparent outline-none"
-                required
+                className="w-full bg-transparent outline-none text-sm"
               />
             </div>
-          </div>
-
-          <div className="text-right mt-3">
-            <Link
-              to="/forgot-password"
-              className="text-indigo-600 hover:text-indigo-800 font-medium transition"
-            >
-              Forgot Password?
-            </Link>
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+            )}
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold 
-            hover:bg-indigo-700 transition-all duration-300 shadow-md"
+            className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition duration-200 shadow-md"
           >
             Login
           </button>
         </form>
 
-        <div className="text-center">
-          <div className="flex items-center my-5">
-            <div className="flex-1 h-px bg-gray-300"></div>
-            <span className="px-3 text-gray-500 text-sm font-medium">OR</span>
-            <div className="flex-1 h-px bg-gray-300"></div>
-          </div>
-
-          <div className="text-center text-sm">
-            <span className="text-gray-600">Don't have an account? </span>
-            <Link
-              to="/Signup"
-              className="text-indigo-600 hover:text-indigo-800 font-semibold transition"
-            >
-              Signup
-            </Link>
-          </div>
-        </div>
-
+        <p className="text-center text-sm text-gray-600 mt-6">
+          Don’t have an account?{" "}
+          <Link to="/Signup" className="text-indigo-600 font-semibold">
+            Signup
+          </Link>
+        </p>
       </div>
     </div>
   );
